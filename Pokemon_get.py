@@ -17,6 +17,13 @@ pokemon_base = {
 UTL_BASE = "https://pokexperto.net/index2.php?seccion=nds/nationaldex/movimientos_nivel&pk="
 
 
+def percentage_bar(none_variable, variable):
+    width = 100
+    a = (int(variable / none_variable * width ))
+    #print("[" + "#" * a + " " * (10 - a) + "]", a * 10, "%")
+    return print("[{}{}]{}%".format("#"* a, " "* (width - a), a ), end='\r')
+
+
 def get_pokemon(index):
 
     url = "{}{}".format(UTL_BASE, index)
@@ -57,7 +64,7 @@ def get_all_pokemons():
         all_pokemons = []
         for index in range(1, 151):
             all_pokemons.append(get_pokemon(index))
-            print("*", end="")
+            percentage_bar(150, index)
 
         with open("pokefile.pkl", "wb") as pokefile:
             pickle.dump(all_pokemons, pokefile)
@@ -66,3 +73,7 @@ def get_all_pokemons():
 
     print("Lista de pokemons cargada!")
     return all_pokemons
+
+    
+if __name__ == "__main__":
+    get_all_pokemons()
