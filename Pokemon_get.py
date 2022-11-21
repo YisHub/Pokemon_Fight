@@ -14,19 +14,18 @@ pokemon_base = {
 }
 
 
-UTL_BASE = "https://pokexperto.net/index2.php?seccion=nds/nationaldex/movimientos_nivel&pk="
+URL_BASE = "https://pokexperto.net/index2.php?seccion=nds/nationaldex/movimientos_nivel&pk="
 
 
 def percentage_bar(none_variable, variable):
     width = 100
     a = (int(variable / none_variable * width ))
-    #print("[" + "#" * a + " " * (10 - a) + "]", a * 10, "%")
     return print("[{}{}]{}%".format("#"* a, " "* (width - a), a ), end='\r')
 
 
 def get_pokemon(index):
 
-    url = "{}{}".format(UTL_BASE, index)
+    url = "{}{}".format(URL_BASE, index)
     session = HTMLSession()
 
     new_pokemon = pokemon_base.copy()
@@ -74,6 +73,6 @@ def get_all_pokemons():
     print("Lista de pokemons cargada!")
     return all_pokemons
 
-    
+
 if __name__ == "__main__":
     get_all_pokemons()

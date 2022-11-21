@@ -14,6 +14,9 @@ def get_player_profile(pokemon_list):
 
 
 def any_player_pokemon_lives(player_profile):
+    for index in range(len(player_profile["pokemon_inventory"])):
+        if player_profile["pokemon_inventory"][index]["current_health"] < 0:
+            player_profile["pokemon_inventory"][index]["current_health"] = 0
 
     return sum([pokemon["current_health"] for pokemon in player_profile["pokemon_inventory"]]) > 0
 
@@ -90,10 +93,29 @@ def fight(player_profile, enemy_pokemon):
         player_attack(player_pokemon, enemy_pokemon)
 
         enemy_attack(enemy_pokemon, player_pokemon)
-
+        if enemy_pokemon["current_health"] <= 0:
+            print("\n{} es derrotado!!".format(enemy_pokemon["name"]))
+            item_lottery(player_profile)
     input("Preciona ENTER para continuar...")
 
     print("--- FIN DEL COMBATE ---\n")
+
+    return player_profile
+
+
+def item_lottery(player_profile):
+    choice = random.choice(["pokeballs", "health_potion", "health_potion"])
+        
+    player_profile[choice] +=  1
+
+    if choice == "pokeballs":
+        item = "pokeball"
+    else:
+        item = "pocion de vida"
+
+
+    print("\nHas obtenido una {}!! ".format(item))
+    return player_profile
 
 
 def pruebas(player_profile, enemy_pokemon):
@@ -126,11 +148,9 @@ def main():
     # enemy_pokemon = random.choice(pokemon_list)
 
     # pruebas(player_profile, enemy_pokemon)
-
+    
     while any_player_pokemon_lives(player_profile):
-        for index in range(len(player_profile["pokemon_inventory"])):
-            if player_profile["pokemon_inventory"][index]["current_health"] < 0:
-                player_profile["pokemon_inventory"][index]["current_health"] = 0
+
         enemy_pokemon = random.choice(pokemon_list)
         fight(player_profile, enemy_pokemon)
 
