@@ -23,12 +23,16 @@ def any_player_pokemon_lives(player_profile):
 
 def choose_pokemon(player_profile):
     chosen = None
+
+    inventory_length = player_profile["pokemon_inventory"]
+
+
     while not chosen:
         print("Elige con que pokemon lucharás!")
-        for index in range(len(player_profile["pokemon_inventory"])):
-            print("{} - {}".format(index, get_pokemon_info(player_profile["pokemon_inventory"][index])))
+        for index in range(len(inventory_length)):
+            print("{} - {}".format(index, get_pokemon_info(inventory_length[index])))
         try:
-            return player_profile["pokemon_inventory"][int(input("Cual eliges? \n"))]
+            return inventory_length[int(input("Cual eliges? \n"))]
         except (ValueError, IndexError):
             print("Opcion invalida")
 
